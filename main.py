@@ -56,9 +56,10 @@ def main():
                 port = port_match.group(1) if port_match else "443"
                 
                 isp = "CF 优选"
-                if "电信" in context_str: isp = "CF 电信优选"
-                elif "联通" in context_str: isp = "CF 联通优选"
                 elif "移动" in context_str: isp = "CF 移动优选"
+                # if "电信" in context_str: isp = "CF 电信优选"
+                # elif "联通" in context_str: isp = "CF 联通优选"
+               
                 
                 results.append(f"{ip}:{port}#{isp}")
 

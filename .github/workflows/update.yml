@@ -26,13 +26,19 @@ jobs:
         pip install playwright
         playwright install chromium
 
-    - name: Run script
-      run: python main.py
+    - name: Run scripts
+      # 三个脚本各跑一遍，分别生成三个文件：
+      # main.py（全量）-> public/all.txt，yd.py（移动）-> public/ip.txt，dx.py（电信+多线）-> public/dx.txt
+      # 一个脚本失败不影响另外两个继续跑
+      run: |
+        python main.py || true
+        python yd.py || true
+        python dx.py || true
 
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add public/ip.txt
-        git commit -m "Update ip.txt" || exit 0
+        git add public/all.txt public/ip.txt public/dx.txt
+        git commit -m "Update ip lists" || exit 0
         git push
